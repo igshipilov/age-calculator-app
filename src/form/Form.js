@@ -74,6 +74,7 @@ function Form({ inputtedDate, date, setDate }) {
 	// 		return `Must be a valid ${dateType}`;
 	// 	}
 	// }
+    
 
 	function makeLabels() {
 		return inputDateTypes.map((dateType, index) => {
