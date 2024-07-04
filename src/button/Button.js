@@ -20,8 +20,8 @@ function Button({ state, setState }) {
 		<button type="submit">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
-				width="46"
-				height="44"
+				width="23"
+				height="22"
 				viewBox="0 0 46 44"
 			>
 				<g fill="none" stroke="#FFF" strokeWidth="2">

@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import Output from "../output/Output.js";
+import classNames from "classnames";
 
 import Button from "../button/Button.js";
 import {
@@ -15,10 +15,12 @@ import "./Form.css";
 function Form({ inputtedDate, date, setDate }) {
 	const {
 		register,
-        // setError,
+		// setError,
 		handleSubmit,
 		formState: { errors, isSubmitSuccessful },
 	} = useForm();
+
+	// const [inputError, setInputError] = useState(false);
 
 	useEffect(() => {
 		// console.log("isSubmitSuccessful: ", isSubmitSuccessful);
@@ -42,6 +44,7 @@ function Form({ inputtedDate, date, setDate }) {
 	const errorsList = Object.keys(errors);
 	const isWholeFormInvalid = errorsList.length === 3;
 
+	console.log("errors: ", errors);
 	console.log("errorsList: ", errorsList);
 	console.log("isWholeFormInvalid: ", isWholeFormInvalid);
 
@@ -56,8 +59,8 @@ function Form({ inputtedDate, date, setDate }) {
 		}
 	}
 
-    // ❌ не помогло
-    // function validationErrorMessage(dateType) {
+	// ❌ не помогло
+	// function validationErrorMessage(dateType) {
 	// 	if (isWholeFormInvalid) {
 	// 		if (dateType === "day") {
 	// 			setError('day', { type: 'custom', message: 'hey hey hey'})
@@ -67,20 +70,42 @@ function Form({ inputtedDate, date, setDate }) {
 	// 			setError('month', { type: 'custom', message: ''})
 	// 		}
 
-    //         if (dateType === "year") {
+	//         if (dateType === "year") {
 	// 			setError('year', { type: 'custom', message: ''})
 	// 		}
 	// 	} else {
 	// 		return `Must be a valid ${dateType}`;
 	// 	}
 	// }
-    
+
+	// const isInputError = () => errorsList.length > 0 ? setInputError(true) : setInputError(false);
+	const inputError = (dateType) => {
+		const hasCurrentDateTypeError = !!errors[dateType];
+
+		const inputClass = classNames({
+			input: true,
+			"input-error": hasCurrentDateTypeError,
+		});
+
+		return inputClass;
+	};
+
+	const dateTypeError = (dateType) => {
+		const hasCurrentDateTypeError = !!errors[dateType];
+
+		const dateTypeClass = classNames({
+            dateType: true,
+			"dateType-error": hasCurrentDateTypeError,
+		});
+
+		return dateTypeClass;
+	};
 
 	function makeLabels() {
 		return inputDateTypes.map((dateType, index) => {
 			return (
 				<label key={index}>
-					<p>{dateType}</p>
+					<p className={dateTypeError(dateType)}>{dateType}</p>
 					<input
 						{...register(`${dateType}`, {
 							required: "This field is required",
@@ -92,9 +117,9 @@ function Form({ inputtedDate, date, setDate }) {
 						onChange={(e) =>
 							(inputtedDate[dateType] = e.target.value)
 						}
-						className="input"
+						className={inputError(dateType)}
 					/>
-					<p>{errors[dateType]?.message}</p>
+					<p className="error-message">{errors[dateType]?.message}</p>
 				</label>
 			);
 		});
@@ -102,19 +127,25 @@ function Form({ inputtedDate, date, setDate }) {
 
 	return (
 		<>
-			<form
-				onSubmit={handleSubmit((date) => {
-					// console.log("date: ", date, "\n", "errors: ", errors);
-					setDate(date);
-				})}
-			>
-				{makeLabels()}
-				{/* <p>{isWholeFormInvalid && "Must be a valid date"}</p> */}
+			<div className="card-form">
+				<form
+					onSubmit={handleSubmit((date) => {
+						// console.log("date: ", date, "\n", "errors: ", errors);
+						setDate(date);
+					})}
+				>
+					<div className="form-container">
+						<div className="labels">{makeLabels()}</div>
 
-				<hr className="line" />
+						{/* <p>{isWholeFormInvalid && "Must be a valid date"}</p> */}
 
-				<Button />
-			</form>
+						<div className="line-button">
+							<div className="line"></div>
+							<Button className="button" />
+						</div>
+					</div>
+				</form>
+			</div>
 		</>
 	);
 }

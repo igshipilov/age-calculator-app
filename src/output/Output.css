@@ -1,0 +1,18 @@
+section {
+    display: inline;
+}
+
+.output-text {
+    font-size: 3.5rem;
+    line-height: 1.15em;
+}
+
+.container-output {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.number {
+    color: hsl(259, 100%, 65%);
+}

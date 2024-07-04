@@ -1,23 +1,93 @@
-form {
-    display: flex;
-    justify-content: start;
+:root {
+	--color-error: hsl(0, 100%, 67%);
+}
 
+p {
+	margin: 0;
+}
+
+form {
 	font-family: "Poppins", sans-serif;
 	font-weight: 400;
 	font-style: normal;
 
-    font-size: 0.65rem;
+	font-size: 0.65rem;
 	text-transform: uppercase;
 }
 
 label {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
 
+.card {
+	display: flex;
+	flex-direction: column;
+}
+
+.form-container {
+	/* display: flex; */
+	/* justify-content: space-between; */
+}
+
+.labels {
+	display: flex;
+	justify-content: flex-start;
+	gap: 1.25rem;
+}
+
+.line-button {
+	/* position: relative; */
+	display: flex;
+	/* flex-direction: column; */
+}
+
+.line {
+	align-self: center;
+	flex-grow: 1;
+	border-bottom: 0.5px solid hsl(0, 0%, 86%);
+}
+
+.error-message {
+	height: 1em;
+
+	text-transform: none;
+	font-style: italic;
+	font-size: 0.55rem;
+
+	margin-top: 0.5em;
+
+	color: var(--color-error);
 }
 
 .input {
-    border: 1px solid hsl(0, 0%, 86%);
-    width: 50px;
+	border: 1px solid hsl(0, 0%, 86%);
+	border-radius: 0.25rem;
+	padding: 0.35em 0.65em;
+	width: 4.25rem;
+
+	font-family: "Poppins", sans-serif;
+	font-weight: 800;
+    font-size: 1.25rem;
+}
+
+.input::placeholder {
+	font-family: "Poppins", sans-serif;
+	font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.input-error {
+	border: 1px solid var(--color-error);
+}
+
+.dateType {
+    margin-bottom: 0.35rem;
+    letter-spacing: 0.25rem;
+    font-weight: 700;
+}
+
+.dateType-error {
+    color: var(--color-error);
 }

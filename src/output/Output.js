@@ -1,3 +1,5 @@
+import "./Output.css";
+
 import { DateTime } from "luxon";
 
 function makeOutput(day, month, year) {
@@ -11,13 +13,16 @@ function makeOutput(day, month, year) {
 	console.log("result: ", result);
 
 	return (
-		<>
+		<div className="container-output">
 			{dateTypes.map((dateType, index) => (
-				<p key={index}>
-					{Math.floor(result[dateType]) || "--"} {dateType}
+				<p className="output-text" key={index}>
+					<section className="number">
+						{Math.floor(result[dateType]) || "--"}
+					</section>{" "}
+					<section>{dateType}</section>
 				</p>
 			))}
-		</>
+		</div>
 	);
 }
 
