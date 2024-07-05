@@ -51,14 +51,12 @@ function Form({ inputtedDate, date, setDate }) {
 			({ type }) => type === "validate"
 		);
 
-		console.log("validateErrors: ", validateErrors);
-
 		return validateErrors.length !== inputDateTypes.length;
 	};
 
 	console.log("errors: ", errors);
 	console.log("errorsList: ", errorsList);
-	// console.log("isValidDate: ", isValidDate);
+	console.log("isValidDate: ", isValidDate);
 
 	// function validationErrorMessage(dateType) {
 	// 	if (!isValidDate) {
@@ -96,6 +94,25 @@ function Form({ inputtedDate, date, setDate }) {
 		return dateTypeClass;
 	};
 
+	// function errorMessage(dateType) {
+	// 	if (isValidDate(errors)) {
+	//         if (dateType === 'day') {
+	//             return 'Must be a valid date';
+	//         } else {
+	//             return ' ';
+	//         }
+	// 	}
+	//     return `Must be a valid ${dateType}`;
+	// }
+
+	function errorMessage(dateType) {
+		if (isValidDate(errors)) {
+			// clearErrors(["day", "month", "year"]);
+			return "Must be a valid date";
+		}
+		return " ";
+	}
+
 	function makeLabels() {
 		return inputDateTypes.map((dateType, index) => {
 			return (
@@ -105,8 +122,44 @@ function Form({ inputtedDate, date, setDate }) {
 						{...register(`${dateType}`, {
 							required: "This field is required",
 							validate: (value, formValues) =>
-								validationMap[dateType](value, formValues) ||
-								`Must be a valid ${dateType}`,
+								{
+                                    if (!isValidDate(errors)) {
+                                        return validationMap[dateType](value, formValues) ||
+                                        `Must be a valid ${dateType}`
+                                    } else {
+                                        if (dateType === 'day') {
+                                            clearErrors(["day", "month", "year"]);
+                                            return 'Must be a valid date';
+                                        } else {
+                                            return '';
+                                        }
+
+                                    }
+                                    
+                                }
+							// validate: (value, formValues) => {
+							// 	if (isValidDate(errors)) {
+							// 		clearErrors(["day", "month", "year"]);
+							// 		setError("day", {
+							// 			type: "manual",
+							// 			message: "Must be a valid date",
+							// 		});
+							//         setError("month", {
+							// 			type: "manual",
+							// 			message: " ",
+							// 		});
+							//         setError("year", {
+							// 			type: "manual",
+							// 			message: " ",
+							// 		});
+							// 	} else if (
+							// 		validationMap[dateType](value, formValues)
+							// 	) {
+							// 		return true;
+							// 	} else {
+							// 		return `Must be a valid ${dateType}`;
+							// 	}
+							// },
 						})}
 						placeholder={placeholderMap[dateType]}
 						onChange={(e) =>
@@ -125,13 +178,20 @@ function Form({ inputtedDate, date, setDate }) {
 			<div className="card-form">
 				<form
 					onSubmit={handleSubmit((date) => {
+						// if (isValidDate(errors)) {
+						// 	clearErrors(["day", "month", "year"]);
+						// 	setError("day", {
+						// 		type: "manual",
+						// 		message: "Must be a valid date",
+						// 	});
+						// }
 						setDate(date);
 					})}
 				>
 					<div className="form-container">
 						<div className="labels">{makeLabels()}</div>
 
-						{/* <p>{!isValidDate(errors) && "Must be a valid date"}</p> */}
+						{/* <p>{isValidDate && "Must be a valid date"}</p> */}
 
 						<div className="line-button">
 							<div className="line"></div>

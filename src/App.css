@@ -37,6 +37,7 @@
     height: 20rem;
 	background-color: white;
 	border-radius: 0.5rem;
+    border-bottom-right-radius: 6em;
 	padding: 3rem;
 }
 
